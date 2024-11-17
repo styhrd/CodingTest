@@ -1,0 +1,13 @@
+.searchbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    font-family: 'Inter', 'serif';
+    color: #888888;
+    cursor: pointer;
+}
+
+.searchbar p {
+    margin: 0;
+}
