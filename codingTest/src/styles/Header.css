@@ -1,0 +1,15 @@
+nav div,
+nav {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  gap: 10px;
+}
+
+nav {
+  max-height: 40px;
+  justify-content: space-between;
+  font-family: "Inter", serif;
+  font-weight: bold;
+  color: #00a6ff;
+}
