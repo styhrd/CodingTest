@@ -1,0 +1,26 @@
+.games {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.game {
+    width: calc((100% - 20px) / 3);
+}
+
+.game img {
+    width: 100%;
+}
+
+.game {
+    position: relative;
+}
+
+.game i {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    color: yellow;
+}
