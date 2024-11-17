@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       {gameData.map((game, index) => {
-        <li>{game.name}</li>
+        return <li key={index}>{game.name}</li>
       })}
     </>
   )
