@@ -12,4 +12,12 @@ nav {
   font-family: "Inter", serif;
   font-weight: bold;
   color: #00a6ff;
+
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: white;
 }

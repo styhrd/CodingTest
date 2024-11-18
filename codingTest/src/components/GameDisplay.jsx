@@ -2,10 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from './DataContext.jsx';
 import '../styles/Display.css';
 
-const GameDisplay = ({ activeCat, searchVal }) => {
+const GameDisplay = ({ activeCat, searchVal, gameProviders }) => {
     const gameData = useContext(GameContext);
     const [arrayGame, setArrayGame] = useState([]);
     const [favGames, setFavGames] = useState([]);
+
+    console.log(gameProviders);
+
 
     // Filter games by category
     function filterGames(category) {

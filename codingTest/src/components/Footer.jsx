@@ -1,5 +1,6 @@
 import React from 'react'
 import fave from '../assets/SvgIcons/FAVE.svg'
+import '../styles/Footer.css'
 
 export const Footer = ({ activeCat, onCategoryChange }) => {
     return (
