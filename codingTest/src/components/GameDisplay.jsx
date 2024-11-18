@@ -5,38 +5,43 @@ import '../styles/Display.css';
 const GameDisplay = ({ activeCat, searchVal }) => {
     const gameData = useContext(GameContext);
     const [arrayGame, setArrayGame] = useState([]);
+    const [favGames, setFavGames] = useState([]);
 
+    // Filter games by category
     function filterGames(category) {
         const filteredArray = gameData.filter(game => game.category.includes(category));
         setArrayGame(filteredArray);
     }
 
+    // Toggle favorite status
     function makeFave(gameToUpdate) {
-        setArrayGame(prevGames => {
-            const updatedGames = prevGames.map(game =>
-                game.id === gameToUpdate.id
-                    ? { ...game, isFavorite: !game.isFavorite }
-                    : game
-            );
+        setFavGames(prevFavGames => {
+            const isAlreadyFavorite = prevFavGames.some(game => game.id === gameToUpdate.id);
 
-            // If game is favorited, ensure it is in arrayGame
-            const isNowFavorite = !gameToUpdate.isFavorite;
-            if (isNowFavorite && !prevGames.some(game => game.id === gameToUpdate.id)) {
-                return [...updatedGames, { ...gameToUpdate, isFavorite: true }];
+            if (isAlreadyFavorite) {
+                // Remove from favorites
+                return prevFavGames.filter(game => game.id !== gameToUpdate.id);
+            } else {
+                // Add to favorites
+                return [...prevFavGames, gameToUpdate];
             }
-
-            // If game is unfavorited, remove it if not matching active filter
-            return updatedGames.filter(game => game.id !== gameToUpdate.id || game.isFavorite);
         });
     }
 
+    // Check if a game is in favorites
+    function checkFave(gameId) {
+        return favGames.some(game => game.id === gameId);
+    }
+
+    // Handle search filter
     useEffect(() => {
         const filteredArray = gameData.filter(game =>
             game.name.toLowerCase().includes(searchVal.toLowerCase())
         );
         setArrayGame(filteredArray);
-    }, [searchVal]);
+    }, [searchVal, gameData]);
 
+    // Handle category filter
     useEffect(() => {
         switch (activeCat) {
             case "start":
@@ -65,26 +70,25 @@ const GameDisplay = ({ activeCat, searchVal }) => {
                 setArrayGame(newGames);
                 break;
             case "fave":
-                const favgames = gameData.filter(game => game.isFavorite);
-                setArrayGame(favgames);
+                setArrayGame(favGames);
                 break;
             default:
                 setArrayGame([]);
                 break;
         }
-    }, [activeCat, gameData]);
+    }, [activeCat, gameData, favGames]);
 
     return (
         <>
             <div className="games">
-                {arrayGame.map((game, index) => (
+                {arrayGame.map((game) => (
                     <div className="game" key={game.id}>
                         <img src={game.img} alt={game.name} />
                         <div onClick={() => makeFave(game)}>
-                            {game.isFavorite ? (
-                                <i className="bi bi-star-fill"></i>
+                            {checkFave(game.id) ? (
+                                <i className="bi bi-star-fill"></i> // Filled star
                             ) : (
-                                <i className="bi bi-star"></i>
+                                <i className="bi bi-star"></i> // Empty star
                             )}
                         </div>
                     </div>
