@@ -7,7 +7,7 @@ const Modal = ({ onClick, providers, addtoProv }) => {
             <div className='modalhead'>
                 <div>
                     <p>Game Providers</p>
-                    <i class="bi bi-x-lg"
+                    <i className="bi bi-x-lg"
                         onClick={onClick}
                     ></i>
                 </div>

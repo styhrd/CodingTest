@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { GameContext } from './DataContext.jsx';
 import '../styles/Display.css';
 
-const GameDisplay = ({ activeCat, searchVal, gameProviders }) => {
+const GameDisplay = ({ activeCat, searchVal, byProvider, showfiltered }) => {
     const gameData = useContext(GameContext);
     const [arrayGame, setArrayGame] = useState([]);
     const [favGames, setFavGames] = useState([]);
 
-    console.log(gameProviders);
+
 
 
     // Filter games by category
@@ -84,18 +84,35 @@ const GameDisplay = ({ activeCat, searchVal, gameProviders }) => {
     return (
         <>
             <div className="games">
-                {arrayGame.map((game) => (
-                    <div className="game" key={game.id}>
-                        <img src={game.img} alt={game.name} />
-                        <div onClick={() => makeFave(game)}>
-                            {checkFave(game.id) ? (
-                                <i className="bi bi-star-fill"></i> // Filled star
-                            ) : (
-                                <i className="bi bi-star"></i> // Empty star
-                            )}
+                {showfiltered ? (
+                    byProvider.map((game) => (
+                        <div className="game" key={game.id}>
+                            <img src={game.img} alt={game.name} />
+                            <div onClick={() => makeFave(game)}>
+                                {checkFave(game.id) ? (
+                                    <i className="bi bi-star-fill"></i> // Filled star
+                                ) : (
+                                    <i className="bi bi-star"></i> // Empty star
+                                )}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))
+                ) : (
+                    arrayGame.map((game) => (
+                        <div className="game" key={game.id}>
+                            <img src={game.img} alt={game.name} />
+                            <div onClick={() => makeFave(game)}>
+                                {checkFave(game.id) ? (
+                                    <i className="bi bi-star-fill"></i> // Filled star
+                                ) : (
+                                    <i className="bi bi-star"></i> // Empty star
+                                )}
+                            </div>
+                        </div>
+                    ))
+                )}
+
+
             </div>
         </>
     );

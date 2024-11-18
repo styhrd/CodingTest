@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GameData } from "./GameData";
 import Header from "./components/Header.jsx";
 import Carousell from "./components/Carousell.jsx";
@@ -10,14 +10,22 @@ import { Footer } from "./components/Footer.jsx";
 import './styles/Header.css'
 import filterlogo from './assets/SvgIcons/3BAR.svg'
 import Modal from "./components/Modal.jsx";
+import { GameContext } from './components/DataContext.jsx';
+import { useContext } from "react";
+
 
 function App() {
   const [showBar, setShowBar] = useState(false);
   const [activeCat, setActiveCat] = useState("start");
   const [searchVal, setSearchVal] = useState("")
   const [showModal, setShowModal] = useState(false)
-  const [gameProviders, setGameProviders] = useState([])
-  const [byProvider, setByProvider] = useState([])
+
+  const [gameProviders, setGameProviders] = useState([]) //selected providers
+  const [byProvider, setByProvider] = useState([])//array of filtered
+  const [showfiltered, setShowFiltered] = useState(false)
+
+  const gameData = useContext(GameContext);//data
+
 
   const providers = [
     'EveryMatrix',
@@ -39,6 +47,19 @@ function App() {
     'relax'
   ]
 
+
+
+  useEffect(() => {
+    const filteredGames = gameData.filter(game =>
+      gameProviders.some(provider => game.gameProvider === provider)
+    );
+
+    setByProvider(filteredGames);
+    console.log(filteredGames);
+
+    setShowFiltered(filteredGames.length > 0);
+
+  }, [gameProviders, gameData]);
 
 
 
@@ -117,7 +138,7 @@ function App() {
         )}
 
         <div className="game-container">
-          <GameDisplay activeCat={activeCat} searchVal={searchVal} />
+          <GameDisplay activeCat={activeCat} searchVal={searchVal} byProvider={byProvider} showfiltered={showfiltered} />
         </div>
       </div>
 
